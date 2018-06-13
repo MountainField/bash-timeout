@@ -58,7 +58,7 @@ Getting started
     1. Download repository definition
         
         ```bash
-        $ sudo curl -kL -o /etc/repos.d/bash-timeout.repo  https://raw.github.ibm.com/NOGAYAMA/bash-timeout/master/bash-timeout.repo
+        $ sudo curl -kL -o /etc/repos.d/bash-timeout.repo  https://github.com/nogayama/bash-timeout/master/bash-timeout.repo
         ```
     
     2. Do yum command
@@ -72,7 +72,7 @@ Getting started
     1. Do rpm command
 
         ```bash
-        $ sudo rpm -ivh https://raw.github.ibm.com/NOGAYAMA/bash-timeout/master/bash-timeout.rpm
+        $ sudo rpm -ivh https://github.com/nogayama/bash-timeout/master/bash-timeout.rpm
         ```
 
 - Install executable directory
@@ -80,7 +80,7 @@ Getting started
     1. Copy executable to directory included in `$PATH` environmental variable
 
         ```bash
-        $ curl -kL -o /usr/local/bin/bash-timeout  https://raw.github.ibm.com/NOGAYAMA/bash-timeout/master/bin/bash-timeout
+        $ curl -kL -o /usr/local/bin/bash-timeout  https://github.com/nogayama/bash-timeout/master/bin/bash-timeout
         $ chmod +x /usr/local/bin/bash-timeout
         ```
 
