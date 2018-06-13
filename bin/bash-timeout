@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+
+# =================================================================
+# bash-timeout
+#
+# Copyright (c) 2018 Takahide Nogayama
+#
+# This software is released under the MIT License.
+# http://opensource.org/licenses/mit-license.php
+# =================================================================
+
+
+function bash_timeout::timeout() {
+	
+	local __version__='1.1.0'
+	
+	# Define usage function
+	function timeout_usage() {
+			#123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789
+		cat <<- EOS
+			
+			Usage: timeout [--verbose] DURATION [COMMAND [ARG]... ]
+			       timeout [-h] [--help] [--version]
+			    
+			    Execute a COMMAND [ARG]... .  If the COMMAND does not finish within the
+			    DURATION, the COMMAND is terminated by the timeout function.  The input via
+			    either redirection or pipe are transfered to the COMMAND transparently.
+			    The exit status of COMMAND is retained if the COMMAND finishes within the 
+			    DURATION.
+			
+			Mandatory arguments:
+			
+			    DURATION
+			         Time duration to wait until COMMAND has been done.  The format of the
+			         duration is the same as `sleep` command installed in your system. e.g.,
+			         10s, 10m, 10h, 10d are supported by most of variations of `sleep`.
+			
+			    COMMAND [ARG]...
+			        Command with arguments to be executed with time-out.
+			    
+			Optional arguments:
+			
+			    -h, --help    Show this help and exit.
+			    --version     Show the version of this command and exit.
+			    
+			    --verbose     Print some messges to stderr to show the progress.
+			
+		EOS
+	}
+	
+	# Declare variables
+	local duration=0
+	local verbose=false
+	
+	# Parse arguments
+	while (( $# > 0 )) ; do
+		case "${1}" in
+		-h|--help) timeout_usage; return 0 ;;
+		--version) echo "${__version__}"; return 0;;
+		--verbose) verbose=true; shift;;
+		*)  duration=${1}; shift
+			break
+		esac
+	done
+	if ! [[ "${duration}" =~ ^[0-9.]+[smhd]?$ ]] ; then
+		echo "Duration=${duration} is not number" 1>&2
+		exit 1
+	fi
+	
+	# Check arguments
+	if [[ "$*" == '' ]] ; then
+		echo "No command is specified" 1>&2
+		exit 1
+	fi 
+	$verbose && echo "Timeout: duration=$duration" 1>&2
+	$verbose && echo "Timeout: command=$@" 1>&2
+	
+	# Preserve the pid of this process
+	local target_pid=$( $SHELL -c 'echo $PPID')
+	$verbose && echo "Timeout: target_pid=${target_pid}" 1>&2
+	
+	# Start another process to kill the children of this process
+	(
+		sleep $duration
+		
+		if ps -0 $target_pid &> /dev/null ; then
+			if $verbose ; then
+				echo "Timeout: Killing $target_pid" 1>&2
+				pkill -P $target_pid
+			else
+				pkill -PIPE -P $target_pid &> /dev/null
+				wait $target_pid &> /dev/null
+			fi
+		fi
+	) &
+	$verbose && echo "Timeout: killer_pid=$!" 1>&2
+	
+	# Release the killer process from job table to suppress output when killing
+	disown
+	
+	# Define a function to kill the killer 
+	function strike_back() {
+		local killer_pid=$1
+		local verbose=$2
+		if kill -0 ${killer_pid} &> /dev/null ; then
+			$verbose && echo "Timeout: Killing timeout_killer_process ${killer_pid}" 1>&2
+			pkill -P $killer_pid &> /dev/null
+			wait $killer_pid &> /dev/null
+		fi
+	}
+	trap "strike_back $! $verbose" EXIT
+	
+	# Start the target command
+	"$@"
+}
+
+if [[ "$0" == "${BASH_SOURCE[0]}" ]] ; then
+	bash_timeout::timeout "$@"
+else
+	# make an alias to `timeout`
+	function timeout() {
+		bash_timeout::timeout "$@"
+	}
+fi

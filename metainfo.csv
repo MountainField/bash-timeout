@@ -1,0 +1,9 @@
+key,value
+version,1.1.0
+name,bash-timeout
+author,Takahide Nogayama
+author_email,nogayama@gmail.com
+url,https://github.com/nogayama/bash-timeout
+description,A command (and also bash function) to terminate another command after specified duration
+license,MIT
+arch,noarch
