@@ -4,3 +4,5 @@ venv*
 .buildpath
 .project
 
+.DS_Store
+
