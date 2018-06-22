@@ -6,7 +6,7 @@ The input via either redirection ( < FILE ) or pipe ( | ) are transferred to the
 The exit status of the target command is retained if the target command finishes within the duration.
 
 The [timeout](https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html) in GNU coreutils is a similar command which has the timeout capability.
-When using timeout in shell script, this library make the script simpler than GNU timeout.
+In shell script, bash-timeout make the script simpler than GNU timeout.
 See [comparison.md](docs/comparison.md) for more details.
 
 Usage
