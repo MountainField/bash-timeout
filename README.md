@@ -1,7 +1,7 @@
 Bash Timeout
 ============
 
-[bash-timeout](https://github.ibm.com/NOGAYAMA/bash-timeout) is a command and also a bash function in order to terminate the target command if the target command does not finish within the duration specified beforehand. 
+[bash-timeout](https://github.com/nogayama/bash-timeout) is a command and also a bash function in order to terminate the target command if the target command does not finish within the duration specified beforehand. 
 The input via either redirection ( < FILE ) or pipe ( | ) are transferred to the target command transparently.
 The exit status of the target command is retained if the target command finishes within the duration.
 
