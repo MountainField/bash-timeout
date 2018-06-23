@@ -44,16 +44,17 @@ Usage
 Getting started
 ----------------
 
-### Prerequisites
+<!--### Prerequisites
 
-- `bash` command (version 3 or later)
-- `sleep` command
-- `pkill` command
-- `ps` command
-
+- `bash` (version 3 or later), `sleep`, `pkill`,`ps`
+-->
 ### Installing
 
-- Install via yum
+- via pip
+    
+        $ pip install bash-timeout
+
+<!--- Install via yum
     
     1. Download repository definition
         
@@ -82,7 +83,8 @@ Getting started
         ```bash
         $ curl -kL -o /usr/local/bin/bash-timeout  https://github.com/nogayama/bash-timeout/master/bin/bash-timeout
         $ chmod +x /usr/local/bin/bash-timeout
-        ```
+        ```-->
+
 
 Characteristics
 ---------------
