@@ -4,6 +4,7 @@ venv*
 .buildpath
 .project
 .pydevproject
+.settings
 
 .DS_Store
 
