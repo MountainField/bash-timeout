@@ -3,6 +3,7 @@ tmp
 venv*
 .buildpath
 .project
+.pydevproject
 
 .DS_Store
 
