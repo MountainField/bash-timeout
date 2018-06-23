@@ -9,46 +9,18 @@ The [timeout](https://www.gnu.org/software/coreutils/manual/html_node/timeout-in
 In shell script, bash-timeout make the script simpler than GNU timeout.
 See [comparison.md](docs/comparison.md) for more details.
 
-Usage
------
-
-- Use as a linux/unix command
-
-    ```bash
-    $ bash-timeout 10s sleep 20s
-    ```
-
-- Use as a bash function
-
-    ```bash
-    source bash-timeout
-    timeout 10s sleep 20s
-    ```
-
-- An example in bash script
-
-    ```bash
-    source bash-timeout
-    
-    function very_expensive_task() {
-        ...
-    }
-    
-    if timeout 10s  very_expensive_task  ; then
-        echo "successfully done"
-    else
-        echo "the task failed or timed out"
-    fi
-    ```
+<!--
 
 Getting started
 ----------------
 
-<!--### Prerequisites
+### Prerequisites
 
 - `bash` (version 3 or later), `sleep`, `pkill`,`ps`
 -->
-### Installing
+
+Installing
+----------
 
 - via pip
     
@@ -84,6 +56,38 @@ Getting started
         $ curl -kL -o /usr/local/bin/bash-timeout  https://github.com/nogayama/bash-timeout/master/bin/bash-timeout
         $ chmod +x /usr/local/bin/bash-timeout
         ```-->
+
+Usage
+-----
+
+- Use as a linux/unix command
+
+    ```bash
+    $ bash-timeout 10s sleep 20s
+    ```
+
+- Use as a bash function
+
+    ```bash
+    source bash-timeout
+    timeout 10s sleep 20s
+    ```
+
+- An example in bash script
+
+    ```bash
+    source bash-timeout
+    
+    function very_expensive_task() {
+        ...
+    }
+    
+    if timeout 10s  very_expensive_task  ; then
+        echo "successfully done"
+    else
+        echo "the task failed or timed out"
+    fi
+    ```
 
 
 Characteristics
